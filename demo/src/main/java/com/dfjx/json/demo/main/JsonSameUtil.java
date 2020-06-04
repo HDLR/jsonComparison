@@ -87,17 +87,20 @@ public class JsonSameUtil {
         }
 
         for(String aKey : aSet){
+            boolean sfgl = true;
 
             /**
              * 判断是否过滤哪些字段
              */
-            if(!("totalRecords".equals(aKey))){
+            if("totalRecords".equals(aKey)){
+//                sfgl = false;
+            }
 
+            if(sfgl){
                 if(!same(a.get(aKey), b.get(aKey))){
                     printRed(aKey + "对应的值不相等：" + a.get(aKey) + "------------" + b.get(aKey));
                     return false;
                 }
-
             }
         }
         return true;
