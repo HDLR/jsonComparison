@@ -31,9 +31,9 @@ public class JsonSameUtil {
             }else if(a.indexOf("{") == 0){
                 return same(new JsonParser().parse(a).getAsJsonObject(), new JsonParser().parse(b).getAsJsonObject());
             }
-            System.out.println("String【" + a + "】 与 【" + b + "】 相等");
-            System.out.println("String【" + a + "】");
-            System.out.println("String【" + b + "】");
+//            System.out.println("String【" + a + "】 与 【" + b + "】 相等");
+//            System.out.println("String【" + a + "】");
+//            System.out.println("String【" + b + "】");
             return true;
         }
         JsonElement aElement = parser.parse(a);
@@ -78,7 +78,7 @@ public class JsonSameUtil {
             System.out.println("判断老系统的key，新系统是否都包含");
             for(String key : aSet){
                 if(!bSet.contains(key)){
-                    System.out.println("老系统的key【"+ key +"】在新系统中不存在。");
+                    printRed("老系统的key【"+ key +"】在新系统中不存在。");
                     return false;
                 }
             }
@@ -87,12 +87,17 @@ public class JsonSameUtil {
         }
 
         for(String aKey : aSet){
-//            if("totalRecords".equals(aKey)){
-//                return true;
-//            }
-            if(!same(a.get(aKey), b.get(aKey))){
-                printRed(aKey + "对应的值不相等：" + a.get(aKey) + "------------" + b.get(aKey));
-                return false;
+
+            /**
+             * 判断是否过滤哪些字段
+             */
+            if(!("totalRecords".equals(aKey))){
+
+                if(!same(a.get(aKey), b.get(aKey))){
+                    printRed(aKey + "对应的值不相等：" + a.get(aKey) + "------------" + b.get(aKey));
+                    return false;
+                }
+
             }
         }
         return true;
